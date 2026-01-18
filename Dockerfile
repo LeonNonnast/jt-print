@@ -9,7 +9,13 @@ WORKDIR /app
 COPY . ./
 
 # Install packages
-RUN npm install  --omit=dev
+RUN npm install
+
+# Build the application
+RUN npm run build
+
+# Remove dev dependencies
+RUN npm ci --omit=dev
 
 # Serve the app
 CMD ["npm", "run", "start:prod"]
