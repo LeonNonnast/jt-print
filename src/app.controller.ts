@@ -1,0 +1,18 @@
+import { Controller, Get } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  /**
+   * ping endpoint
+   *
+   * @return {*}  {string}
+   * @memberof AppController
+   */
+  @Get()
+  ping(): string {
+    return this.appService.getServerIsRunning();
+  }
+}
