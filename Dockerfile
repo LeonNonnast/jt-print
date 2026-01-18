@@ -9,7 +9,9 @@ WORKDIR /app
 COPY . ./
 
 # Install packages
-RUN npm ci
+RUN npm install  --omit=dev
 
 # Serve the app
 CMD ["npm", "run", "start:prod"]
+
+# docker build -t ijt-print . 
