@@ -54,6 +54,10 @@ export const getSystemName = (systemName: Systems): string => {
       return 'Ko System with double Repechage';
     case Systems.DoubleKoSystemWithDoubleRepechage:
       return 'Double Ko System';
+    case Systems.PoolSystem:
+      return 'Pool System';
+    case Systems.PoolSystemWithThirdPlace:
+      return 'Pool System (Kampf um Platz 3)';
   }
   return 'no system translation found';
 };

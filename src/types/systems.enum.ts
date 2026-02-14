@@ -5,4 +5,6 @@ export enum Systems {
   KoSystemWithDoubleRepechage = 'KoSystemWithDoubleRepechage',
   DoubleKoSystemWithDoubleRepechage = 'DoubleKoSystem',
   IJF = 'IJF',
+  PoolSystem = 'PoolSystem',
+  PoolSystemWithThirdPlace = 'PoolSystemWithThirdPlace',
 }

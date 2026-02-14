@@ -8,6 +8,7 @@ import { PDFLayoutListPoolDeathMatchSizeFactory } from './pdf-layout-list-pool-d
 import { PDFLayoutListTreeKoSystemWithDoubleRepechageSizeFactory } from './pdf-layout-list-tree-ko-system-with-double-repechage-size-factory';
 import { ListInfo } from '../../types/list-info.type';
 import { PDFLayoutListTreeDoubleKoSystemWithDoubleRepechageSizeFactory } from './pdf-layout-list-tree-double-ko-system-with-double-repechage-size-factory';
+import { PDFLayoutListPoolSystem } from './pdf-layout-list-pool-system';
 
 export abstract class PDFLayoutListFactory {
   public static build(
@@ -38,6 +39,13 @@ export abstract class PDFLayoutListFactory {
         );
       case Systems.DoubleKoSystemWithDoubleRepechage:
         return PDFLayoutListTreeDoubleKoSystemWithDoubleRepechageSizeFactory.build(
+          documentInfo,
+          listInfo,
+          competitions,
+        );
+      case Systems.PoolSystem:
+      case Systems.PoolSystemWithThirdPlace:
+        return PDFLayoutListPoolSystem.Construct(
           documentInfo,
           listInfo,
           competitions,

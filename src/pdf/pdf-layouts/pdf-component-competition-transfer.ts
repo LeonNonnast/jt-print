@@ -117,7 +117,7 @@ export class PDFComponentCompetitionTransfer extends PDFComponentCompetition {
       widthAthleteContainer,
       _startPositionX,
       widthFightNumberContainer,
-      y + height + 7,
+      y + height + 2,
       height,
     );
 

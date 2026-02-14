@@ -33,6 +33,9 @@ export class Competition {
   @ApiProperty()
   startNumberB: string | undefined;
 
+  @ApiProperty()
+  poolNumber: number | undefined;
+
   constructor(data: any) {
     this.fightNumber = data.fightNumber;
     this.athleteA = data.athleteA;
@@ -48,5 +51,6 @@ export class Competition {
 
     this.isRepechage = data.isRepechage;
     this.isFinal = data.isFinal;
+    this.poolNumber = data.poolNumber;
   }
 }

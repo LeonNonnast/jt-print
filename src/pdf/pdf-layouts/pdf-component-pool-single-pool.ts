@@ -1,5 +1,5 @@
 import { getFullName } from '../../types/athlete-registration.type';
-import { PDFComponentPool } from './pdf-component-pool';
+import { PDFComponentPool, PoolDrawOptions } from './pdf-component-pool';
 
 export class PDFComponentPoolSingle extends PDFComponentPool {
   private setDefaultFont() {
@@ -37,13 +37,30 @@ export class PDFComponentPoolSingle extends PDFComponentPool {
     return athletes;
   }
 
-  async draw() {
-    await this.doc.addPageAsync();
+  /**
+   * Calculate the total height this pool table will occupy.
+   * Useful for layout planning without actually drawing.
+   */
+  getTableHeight(): number {
+    const rowHeight = 30;
+    const athletes = this.getAthletes();
+    // header row + athlete rows + half row for time
+    return rowHeight + rowHeight * athletes.length + rowHeight * 0.5;
+  }
+
+  async draw(options?: PoolDrawOptions): Promise<number> {
+    const skipAddPage = options?.skipAddPage ?? false;
+    const xStartParam = options?.xStart ?? 25;
+    const yStartParam = options?.yStart ?? 90;
+
+    if (!skipAddPage) {
+      await this.doc.addPageAsync();
+    }
 
     this.setDefaultFont();
 
-    const xStart = 25;
-    const yStart = 90;
+    const xStart = xStartParam;
+    const yStart = yStartParam;
     const rowHeight = 30;
     const widthCompetitionContainer = 25;
     const widthResultContainer = widthCompetitionContainer;
@@ -215,6 +232,9 @@ export class PDFComponentPoolSingle extends PDFComponentPool {
         }
       });
     });
+
+    // Return the Y position after the table ends
+    return yStart + fullHeight;
   }
 
   // private calculateSumResult(_athlete: Athlete): number {

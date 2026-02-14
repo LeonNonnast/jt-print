@@ -18,6 +18,7 @@ import { PDFLayoutListTreeKoSystemWithDoubleRepechageSize8 } from './pdf-layout-
 import { PDFLayoutListTreeKoSystemWithDoubleRepechageSize64 } from './pdf-layout-list-tree-ko-system-with-double-repechage-size-64';
 import { PDFLayoutListTreeKoSystemWithDoubleRepechageSize32 } from './pdf-layout-list-tree-ko-system-with-double-repechage-size-32';
 import { PDFLayoutListTreeKoSystemWithDoubleRepechageSize16 } from './pdf-layout-list-tree-ko-system-with-double-repechage-size-16';
+import { PDFLayoutListPoolSystem } from './pdf-layout-list-pool-system';
 
 describe('Pdf Layout List Factory', () => {
   const documentInfo = createRandomDocumentInfo();
@@ -151,6 +152,16 @@ describe('Pdf Layout List Factory', () => {
         system: Systems.KoSystemWithDoubleRepechage,
         athleteCount: 128,
         expectedLayout: PDFLayoutListTreeKoSystemWithDoubleRepechageSize128,
+      },
+      {
+        system: Systems.PoolSystem,
+        athleteCount: 6,
+        expectedLayout: PDFLayoutListPoolSystem,
+      },
+      {
+        system: Systems.PoolSystemWithThirdPlace,
+        athleteCount: 6,
+        expectedLayout: PDFLayoutListPoolSystem,
       },
     ])(
       'test $system with athlete count $athleteCount',
