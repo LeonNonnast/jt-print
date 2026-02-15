@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <clipPath id="sunClipC">
+      <rect x="0" y="0" width="400" height="210"/>
+    </clipPath>
+    <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8593A"/>
+      <stop offset="100%" stop-color="#F2994A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rising sun - half circle with warm gradient -->
+  <circle cx="200" cy="210" r="80" fill="url(#sunGrad)" clip-path="url(#sunClipC)"/>
+
+  <!-- Sun rays -->
+  <g stroke="#E8593A" stroke-width="3" stroke-linecap="round">
+    <line x1="200" y1="100" x2="200" y2="115"/>
+    <line x1="155" y1="108" x2="162" y2="121"/>
+    <line x1="118" y1="133" x2="129" y2="143"/>
+    <line x1="245" y1="108" x2="238" y2="121"/>
+    <line x1="282" y1="133" x2="271" y2="143"/>
+    <line x1="97" y1="170" x2="110" y2="175"/>
+    <line x1="303" y1="170" x2="290" y2="175"/>
+  </g>
+
+  <!-- Horizon line -->
+  <line x1="60" y1="210" x2="340" y2="210" stroke="#1a1a1a" stroke-width="3"/>
+
+  <!-- Typography: jt -->
+  <text x="200" y="320" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="100" font-weight="300" letter-spacing="12" fill="#1a1a1a">jt</text>
+</svg>

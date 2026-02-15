@@ -19,10 +19,7 @@ export class PDFComponentHeaderList extends PDFComponentHeader {
 
   public async draw() {
     this.doc.image(
-      this.documentInfo.logo ||
-        this.documentInfo.tournamentName.indexOf('Masters') > 0
-        ? './assets/img/logo_masters.png'
-        : './assets/img/logo.png',
+      this.doc.getLogo(this.documentInfo),
       25,
       15,
       { width: 50 },

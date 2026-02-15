@@ -57,10 +57,11 @@ export class PDFDocumentWrapper extends PDFDocument {
   }
 
   public getLogo(documentInfo: DocumentInfo) {
-    return documentInfo.logo ||
-      documentInfo.tournamentName.indexOf('Masters') > 0
-      ? './assets/img/logo_masters.png'
-      : './assets/img/logo.png';
+    if (documentInfo.logo) return documentInfo.logo;
+    if (documentInfo.tournamentName.indexOf('Masters') > 0) {
+      return './assets/img/logo_masters.png';
+    }
+    return './assets/img/jt-logo.png';
   }
 
   public addPage(options?: PDFKit.PDFDocumentOptions): PDFKit.PDFDocument {
