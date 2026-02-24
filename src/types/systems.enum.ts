@@ -7,4 +7,5 @@ export enum Systems {
   IJF = 'IJF',
   PoolSystem = 'PoolSystem',
   PoolSystemWithThirdPlace = 'PoolSystemWithThirdPlace',
+  JapanischesTurnier = 'JapanischesTurnier',
 }

@@ -16,6 +16,8 @@ import { PDFLayoutAthleteTableForCrossCheck } from './pdf-layouts/pdf-layout-ath
 import { PDFLayoutBase } from './pdf-layouts/pdf-layout-base';
 import { PdfLayoutCertificate } from './pdf-layouts/pdf-layout-certificate';
 import { PdfLayoutCertificateMasters2025 } from './pdf-layouts/pdf-layout-certificate-Masters-2025';
+import { PDFLayoutSafariLaufzettel } from './pdf-layouts/pdf-layout-safari-laufzettel';
+import { SafariLaufzettelRequestDto } from './dto/safari-laufzettel.dto';
 
 @Injectable()
 export class PdfService {
@@ -175,6 +177,25 @@ export class PdfService {
     const pdfLayout = PdfLayoutStartCard.Construct(
       documentInfo,
       athleteRegistrations,
+    );
+    return (await this.generateLayout(pdfLayout)).result();
+  }
+
+  /**
+   * generates safari laufzettel PDFs
+   *
+   * @param {SafariLaufzettelRequestDto} data
+   * @return {*}  {Promise<PDFKit.PDFDocument>}
+   * @memberof PdfService
+   */
+  async generateSafariLaufzettel(
+    data: SafariLaufzettelRequestDto,
+  ): Promise<PDFKit.PDFDocument> {
+    const pdfLayout = PDFLayoutSafariLaufzettel.Construct(
+      data.documentInfo,
+      data.participants,
+      data.year,
+      data.empty ?? false,
     );
     return (await this.generateLayout(pdfLayout)).result();
   }

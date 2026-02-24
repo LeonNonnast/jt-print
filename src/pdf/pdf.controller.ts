@@ -9,6 +9,7 @@ import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AthleteRegistrationTableDto } from './dto/registration-table.dto';
 import { DocumentInfo } from '../types/document-info.type';
 import { AthleteRegistrationCertificationDto } from './dto/registration-certification';
+import { SafariLaufzettelRequestDto } from './dto/safari-laufzettel.dto';
 
 @Controller('pdf')
 export class PdfController {
@@ -248,6 +249,31 @@ export class PdfController {
    * @param {Response} res
    * @memberof PdfController
    */
+  /**
+   * endpoint to generate safari laufzettel PDFs
+   * @param {SafariLaufzettelRequestDto} body
+   * @param {Response} res
+   * @memberof PdfController
+   */
+  @Post('safari/laufzettel')
+  @ApiOperation({
+    description: 'this endpoint generates safari laufzettel PDFs',
+    summary: 'this endpoint generates safari laufzettel PDFs',
+  })
+  @HttpCode(200)
+  @ApiResponse({ status: 200, description: 'PDF is successfully generated' })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiBody({ type: SafariLaufzettelRequestDto })
+  public async getSafariLaufzettel(
+    @Body() body: SafariLaufzettelRequestDto,
+    @Res() res: Response,
+  ) {
+    const doc: PDFKit.PDFDocument =
+      await this.pdfService.generateSafariLaufzettel(body);
+    doc.pipe(res as any);
+  }
+
   @Post('lists')
   @ApiOperation({
     description: 'this endpoint generates a list based on provided system',

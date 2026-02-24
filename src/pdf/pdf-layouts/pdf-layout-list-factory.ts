@@ -9,6 +9,7 @@ import { PDFLayoutListTreeKoSystemWithDoubleRepechageSizeFactory } from './pdf-l
 import { ListInfo } from '../../types/list-info.type';
 import { PDFLayoutListTreeDoubleKoSystemWithDoubleRepechageSizeFactory } from './pdf-layout-list-tree-double-ko-system-with-double-repechage-size-factory';
 import { PDFLayoutListPoolSystem } from './pdf-layout-list-pool-system';
+import { PDFLayoutListJapanischesTurnier } from './pdf-layout-list-japanisches-turnier';
 
 export abstract class PDFLayoutListFactory {
   public static build(
@@ -46,6 +47,12 @@ export abstract class PDFLayoutListFactory {
       case Systems.PoolSystem:
       case Systems.PoolSystemWithThirdPlace:
         return PDFLayoutListPoolSystem.Construct(
+          documentInfo,
+          listInfo,
+          competitions,
+        );
+      case Systems.JapanischesTurnier:
+        return PDFLayoutListJapanischesTurnier.Construct(
           documentInfo,
           listInfo,
           competitions,

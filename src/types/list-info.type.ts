@@ -58,6 +58,8 @@ export const getSystemName = (systemName: Systems): string => {
       return 'Pool System';
     case Systems.PoolSystemWithThirdPlace:
       return 'Pool System (Kampf um Platz 3)';
+    case Systems.JapanischesTurnier:
+      return 'Japanisches Turnier';
   }
   return 'no system translation found';
 };
