@@ -168,10 +168,10 @@ export class PDFLayoutSafariLaufzettel extends PDFLayoutBase {
       w2W: 70,
       w3X: 285,
       w3W: 70,
-      platzX: 430,
+      platzX: 425,
       platzW: 35,
-      punkteX: 470,
-      punkteW: 40,
+      punkteX: 462,
+      punkteW: 48,
     };
     const rowH = 20;
     let y = startY;
