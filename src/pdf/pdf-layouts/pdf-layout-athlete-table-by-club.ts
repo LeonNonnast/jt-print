@@ -19,9 +19,13 @@ export class PDFLayoutAthleteTableByClub extends PDFLayoutAthleteTable {
       // Secondary: clubName (grouped within nation)
       if (a.clubName !== b.clubName)
         return a.clubName > b.clubName ? 1 : -1;
-      // Tertiary: weightedOrder, then name
+      // Tertiary: weightedOrder (category ordering)
       if ((a.weightedOrder ?? 0) !== (b.weightedOrder ?? 0))
         return (a.weightedOrder ?? 0) - (b.weightedOrder ?? 0);
+      // Quaternary: category name (keeps same category together)
+      if ((a.category ?? '') !== (b.category ?? ''))
+        return (a.category ?? '') > (b.category ?? '') ? 1 : -1;
+      // Then: name
       if (a.lastName !== b.lastName)
         return a.lastName > b.lastName ? 1 : -1;
       return a.firstName > b.firstName ? 1 : -1;
