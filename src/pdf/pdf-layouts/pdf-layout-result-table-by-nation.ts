@@ -2,18 +2,19 @@ import { PDFLayoutResultTable } from './pdf-layout-result-table';
 
 export class PDFLayoutResultTableByNation extends PDFLayoutResultTable {
   protected sort() {
-    this.athletes
-      .sort((a, b) => (a.rank > b.rank ? 1 : -1))
-      .sort((a, b) =>
-        a.weightedOrder == b.weightedOrder
-          ? 0
-          : a.weightedOrder > b.weightedOrder
-          ? 1
-          : -1,
-      )
-      .sort((a, b) =>
-        a.nationCode == b.nationCode ? 0 : a.nationCode > b.nationCode ? 1 : -1,
-      );
+    this.athletes.sort((a, b) => {
+      // Primary: nationCode
+      if (a.nationCode !== b.nationCode)
+        return a.nationCode > b.nationCode ? 1 : -1;
+      // Secondary: weightedOrder (category ordering)
+      if ((a.weightedOrder ?? 0) !== (b.weightedOrder ?? 0))
+        return (a.weightedOrder ?? 0) - (b.weightedOrder ?? 0);
+      // Tertiary: category name (ensures same category stays together)
+      if ((a.category ?? '') !== (b.category ?? ''))
+        return (a.category ?? '') > (b.category ?? '') ? 1 : -1;
+      // Quaternary: rank within category
+      return (a.rank ?? 0) - (b.rank ?? 0);
+    });
   }
 
   async generateTable() {

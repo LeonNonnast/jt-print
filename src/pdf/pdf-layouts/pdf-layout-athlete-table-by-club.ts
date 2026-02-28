@@ -12,13 +12,20 @@ import { PDFLayoutAthleteTable } from './pdf-layout-athlete-table';
  */
 export class PDFLayoutAthleteTableByClub extends PDFLayoutAthleteTable {
   protected sort() {
-    this.athletes
-      .sort((a, b) => (a.firstName > b.firstName ? 1 : -1))
-      .sort((a, b) => (a.lastName > b.lastName ? 1 : -1))
-      .sort((a, b) => (a.associationCode > b.associationCode ? 1 : -1))
-      .sort((a, b) => (a.weightedOrder > b.weightedOrder ? 1 : -1))
-      .sort((a, b) => (a.clubName > b.clubName ? 1 : -1))
-      .sort((a, b) => (a.nationCode > b.nationCode ? 1 : -1));
+    this.athletes.sort((a, b) => {
+      // Primary: nationCode (each nation = new page)
+      if (a.nationCode !== b.nationCode)
+        return a.nationCode > b.nationCode ? 1 : -1;
+      // Secondary: clubName (grouped within nation)
+      if (a.clubName !== b.clubName)
+        return a.clubName > b.clubName ? 1 : -1;
+      // Tertiary: weightedOrder, then name
+      if ((a.weightedOrder ?? 0) !== (b.weightedOrder ?? 0))
+        return (a.weightedOrder ?? 0) - (b.weightedOrder ?? 0);
+      if (a.lastName !== b.lastName)
+        return a.lastName > b.lastName ? 1 : -1;
+      return a.firstName > b.firstName ? 1 : -1;
+    });
   }
 
   async generateTable() {
