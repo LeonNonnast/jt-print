@@ -47,7 +47,7 @@ export const getSystemName = (systemName: Systems): string => {
     case Systems.BestOfThree:
       return 'Best of three';
     case Systems.JederGegenJeden:
-      return 'Death Match';
+      return 'Jeder gegen Jeden';
     case Systems.KoSystem:
       return 'Ko System';
     case Systems.KoSystemWithDoubleRepechage:
