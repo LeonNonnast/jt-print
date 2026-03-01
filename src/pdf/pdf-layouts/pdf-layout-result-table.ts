@@ -73,7 +73,9 @@ export abstract class PDFLayoutResultTable extends PDFLayoutTable {
 
   protected async generateTableItem(y, athlete: Athlete): Promise<number> {
     const nationSuffix =
-      athlete.nationCode == 'GER' ? `-${athlete.associationCode}` : '';
+      athlete.nationCode == 'GER' && athlete.associationCode
+        ? `-${athlete.associationCode}`
+        : '';
     return await this.generateTableRow(
       y,
       athlete.rank,
