@@ -168,37 +168,46 @@ export class PDFLayoutListJapanischesTurnier extends PDFLayoutList {
       const athleteAText = fight.athleteA
         ? getFullName(fight.athleteA)
         : fight.startNumberA || '';
-      const athleteAWeight = fight.athleteA?.category
-        ? ` (${fight.athleteA.category})`
-        : '';
+      const isWinnerA = fight.result?.isWinnerA === true;
+      if (isWinnerA) this.doc.setFontBold();
       this.doc.text(
-        athleteAText + athleteAWeight,
+        athleteAText,
         colX.athleteA,
         y + 4,
         { width: colW.athlete, ellipsis: true },
       );
+      if (isWinnerA) { this.doc.setFontNormal(); this.doc.fontSize(9); }
 
       // Athlete B
       const athleteBText = fight.athleteB
         ? getFullName(fight.athleteB)
         : fight.startNumberB || '';
-      const athleteBWeight = fight.athleteB?.category
-        ? ` (${fight.athleteB.category})`
-        : '';
+      const isWinnerB = fight.result && !fight.result.isWinnerA;
+      if (isWinnerB) this.doc.setFontBold();
       this.doc.text(
-        athleteBText + athleteBWeight,
+        athleteBText,
         colX.athleteB,
         y + 4,
         { width: colW.athlete, ellipsis: true },
       );
+      if (isWinnerB) { this.doc.setFontNormal(); this.doc.fontSize(9); }
 
       // Result
       if (fight.result) {
         const resultText = this.doc.formatPoints(fight.result);
         this.doc.text(resultText, colX.result, y + 4, {
-          width: colW.result,
+          width: colW.result / 2,
           align: 'center',
         });
+        // Time
+        this.doc.fontSize(7);
+        this.doc.fillColor('#666');
+        this.doc.text(fight.result.time || '', colX.result + colW.result / 2, y + 5, {
+          width: colW.result / 2,
+          align: 'center',
+        });
+        this.doc.fontSize(9);
+        this.doc.fillColor('#000');
       } else {
         // Empty field for not yet generated fights
         this.doc
