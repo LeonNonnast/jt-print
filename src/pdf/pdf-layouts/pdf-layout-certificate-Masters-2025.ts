@@ -25,6 +25,10 @@ export class PdfLayoutCertificateMasters2025 extends PdfLayoutCertificate {
     );
   }
 
+  protected getJtLogoPosition() {
+    return { x: 500, y: 740, width: 50 };
+  }
+
   protected printAthlete(_athlete: Athlete, _index: number): void {
     const options = {
       align: 'center',

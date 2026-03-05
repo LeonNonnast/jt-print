@@ -14,8 +14,8 @@ import { PdfLayoutStartCard } from './pdf-layouts/pdf-layout-start-cards';
 import { PDFDocumentWrapper } from './pdf.document';
 import { PDFLayoutAthleteTableForCrossCheck } from './pdf-layouts/pdf-layout-athlete-table-for-cross-check';
 import { PDFLayoutBase } from './pdf-layouts/pdf-layout-base';
-import { PdfLayoutCertificate } from './pdf-layouts/pdf-layout-certificate';
-import { PdfLayoutCertificateMasters2025 } from './pdf-layouts/pdf-layout-certificate-Masters-2025';
+import { PdfLayoutCertificateFactory } from './pdf-layouts/pdf-layout-certificate-factory';
+import { CertificateConfig } from '../types/certificate-config.type';
 import { PDFLayoutSafariLaufzettel } from './pdf-layouts/pdf-layout-safari-laufzettel';
 import { SafariLaufzettelRequestDto } from './dto/safari-laufzettel.dto';
 
@@ -47,10 +47,16 @@ export class PdfService {
   async generateCertificates(
     documentInfo: DocumentInfo,
     athletes: Athlete[],
+    certificateConfig?: CertificateConfig,
   ): Promise<PDFKit.PDFDocument> {
-    const pdfLayout = PdfLayoutCertificateMasters2025.Construct(
+    const config: CertificateConfig = certificateConfig || {
+      templateId: 'classic',
+      tournamentName: documentInfo.tournamentName,
+    };
+    const pdfLayout = PdfLayoutCertificateFactory.build(
       documentInfo,
       athletes,
+      config,
     );
     return (await this.generateLayout(pdfLayout)).result();
   }
@@ -198,6 +204,30 @@ export class PdfService {
       data.empty ?? false,
     );
     return (await this.generateLayout(pdfLayout)).result();
+  }
+
+  async generateCertificatePreview(
+    documentInfo: DocumentInfo,
+    certificateConfig: CertificateConfig,
+  ): Promise<PDFKit.PDFDocument> {
+    const dummyAthlete: Athlete = {
+      id: 'preview',
+      firstName: 'Alexander-Maximilian',
+      lastName: 'von Hohenzollern',
+      rank: 1,
+      category: '81',
+      startNumber: 1,
+      nationCode: 'GER',
+      yearOfBirth: '1990',
+      associationCode: 'BY',
+      clubName: 'JC München',
+      weightedOrder: undefined,
+    } as Athlete;
+    return this.generateCertificates(
+      documentInfo,
+      [dummyAthlete],
+      certificateConfig,
+    );
   }
 
   private async generateLayout(pdfLayout: PDFLayoutBase) {

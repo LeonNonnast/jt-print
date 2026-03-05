@@ -9,6 +9,7 @@ import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AthleteRegistrationTableDto } from './dto/registration-table.dto';
 import { DocumentInfo } from '../types/document-info.type';
 import { AthleteRegistrationCertificationDto } from './dto/registration-certification';
+import { CertificatePreviewDto } from './dto/certificate-preview.dto';
 import { SafariLaufzettelRequestDto } from './dto/safari-laufzettel.dto';
 
 @Controller('pdf')
@@ -65,7 +66,32 @@ export class PdfController {
     const doc: PDFKit.PDFDocument = await this.pdfService.generateCertificates(
       body.documentInfo,
       body.athletes,
+      body.certificateConfig,
     );
+    doc.pipe(res as any);
+  }
+
+  @Post('certificates/preview')
+  @ApiOperation({
+    description: 'this endpoint generates a certificate preview PDF',
+    summary: 'generates a certificate preview with a dummy athlete',
+  })
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    description: 'Preview PDF is successfully generated',
+  })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @ApiBody({ type: CertificatePreviewDto })
+  public async getCertificatePreview(
+    @Body() body: CertificatePreviewDto,
+    @Res() res: Response,
+  ) {
+    const doc: PDFKit.PDFDocument =
+      await this.pdfService.generateCertificatePreview(
+        body.documentInfo,
+        body.certificateConfig,
+      );
     doc.pipe(res as any);
   }
 
