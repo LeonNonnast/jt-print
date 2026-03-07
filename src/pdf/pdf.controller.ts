@@ -315,4 +315,17 @@ export class PdfController {
     const doc: PDFKit.PDFDocument = await this.pdfService.generateList(body);
     doc.pipe(res as any);
   }
+
+  @Post('invoice')
+  @ApiOperation({
+    description: 'Generate an invoice PDF',
+    summary: 'Generate an invoice PDF with company details, line items, and tax information',
+  })
+  @HttpCode(200)
+  @ApiResponse({ status: 200, description: 'Invoice PDF is successfully generated' })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  public async getInvoice(@Body() body: any, @Res() res: Response) {
+    const doc: PDFKit.PDFDocument = await this.pdfService.generateInvoice(body);
+    doc.pipe(res as any);
+  }
 }

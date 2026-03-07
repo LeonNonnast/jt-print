@@ -230,6 +230,14 @@ export class PdfService {
     );
   }
 
+  async generateInvoice(data: any): Promise<PDFKit.PDFDocument> {
+    const { PDFLayoutInvoice } = await import(
+      './pdf-layouts/pdf-layout-invoice'
+    );
+    const pdfLayout = new PDFLayoutInvoice(data);
+    return (await this.generateLayout(pdfLayout)).result();
+  }
+
   private async generateLayout(pdfLayout: PDFLayoutBase) {
     return await PDFDocumentWrapper.create(pdfLayout).generate();
   }
